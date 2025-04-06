@@ -1,11 +1,56 @@
-from django.db import models
+import uuid
+""""
+O que isso permite:
+Criar e manipular objetos Produto dentro do seu código;
+Converter facilmente de/para dicionário (para se comunicar com o Cosmos DB)."""
 
-# Create your models here.
-class Produto(models.Model):
-    id_produto = models.UUIDField(primary_key=True, editable=False, unique=True)
-    nome = models.CharField(max_length=100)
-    descricao = models.TextField()
-    preco = models.DecimalField(max_digits=10, decimal_places=2)
-    estoque = models.PositiveIntegerField()
-    categoria = models.CharField(max_length=50, default='Geral')
-    imagem_url = models.URLField(default='https://example.com/imagem.jpg')
+"""
+📌 O que significa id=None?
+No Python, isso define um parâmetro opcional. Ou seja:
+
+Se você passar um ID ao criar o produto, ele será usado.
+
+Se não passar nada, será gerado um ID automaticamente.
+
+Isso é útil porque:
+
+Ao criar um novo produto, normalmente você não tem um ID ainda — ele precisa ser único.
+
+Mas ao atualizar ou deletar um produto, o ID já existe e deve ser mantido.
+
+🔁 E o que faz id or str(uuid.uuid4())?
+É um "atalho elegante" que significa:
+
+“Se id tiver valor (não for None), usa ele.
+Senão, gera um UUID aleatório.”
+"""
+
+class Produto:
+    def __init__(self, nome, descricao, preco, categoria, imagem_url, id=None):
+        self.id = id or str(uuid.uuid4())
+        self.nome = nome
+        self.descricao = descricao
+        self.preco = preco
+        self.categoria = categoria  # Partition Key!
+        self.imagem_url = imagem_url
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "nome": self.nome,
+            "descricao": self.descricao,
+            "preco": self.preco,
+            "categoria": self.categoria,
+            "imagem_url": self.imagem_url   
+        }
+
+    @staticmethod
+    def from_dict(data):
+        return Produto(
+            id=data.get("id"),
+            nome=data.get("nome"),
+            descricao=data.get("descricao"),
+            preco=data.get("preco"),
+            categoria=data.get("categoria"),
+            imagem_url=data.get("imagem_url")
+        )

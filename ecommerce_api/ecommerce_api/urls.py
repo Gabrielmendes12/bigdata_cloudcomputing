@@ -19,7 +19,7 @@ from django.urls import path, include
 from usuarios.views import UsuarioViewSet 
 from cartoes.views import CartaoCreditoViewSet
 from enderecos.views import EnderecoViewSet, TipoEnderecoViewSet
-from produtos.views import ProdutoViewSet
+#from produtos.views import ProdutoViewSet
 from rest_framework import routers
 
 # Criando um router para gerar automaticamente as rotas
@@ -29,12 +29,13 @@ router.register(r'cartoes', CartaoCreditoViewSet)
 router.register(r'enderecos', EnderecoViewSet)
 router.register(r'tipos-endereco', TipoEnderecoViewSet)
 #router.register(r'pedidos', PedidoViewSet)
-router.register(r'produtos', ProdutoViewSet)
+#router.register(r'produtos', ProdutoViewSet)
 #router.register(r'itens-pedido', ItemPedidoViewSet)
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include(router.urls)),
+    path("", include('produtos.urls')),
 
 ]

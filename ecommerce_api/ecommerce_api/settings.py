@@ -9,9 +9,24 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-import os
-
+#import os
 from pathlib import Path
+from decouple import config
+
+
+#from pymongo import MongoClient
+
+# Cosmos DB Settings
+COSMOSDB_URI = config("COSMOSDB_URI")
+COSMOSDB_KEY = config("COSMOSDB_KEY")
+COSMOSDB_DATABASE_ID = config("COSMOSDB_DATABASE_ID")
+COSMOSDB_CONTAINER_ID = config("COSMOSDB_CONTAINER_ID")
+
+
+
+"""# Criando a conexão com o CosmosDB
+client = MongoClient(COSMOSDB_URI, username='', password=COSMOSDB_PRIMARY_KEY)
+cosmos_db = client[COSMOSDB_DATABASE_NAME]"""
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -80,7 +95,7 @@ WSGI_APPLICATION = "ecommerce_api.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'default': {  # Banco de dados padrão (MySQL)
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ibmec-cloud-mall',  # Nome do banco no MySQL
         'USER': 'gabmendes01',  # Usuário do MySQL
@@ -90,15 +105,19 @@ DATABASES = {
         'OPTIONS': {
             'ssl': {'ca': '/caminho/para/BaltimoreCyberTrustRoot.crt.pem'}  # Certificado SSL se necessário
         }
-    }   
+    }
 }
+
+
+#DATABASE_ROUTERS = ['produtos.routers.ProdutoRouter']
+
 # Configuração do Azure Cosmos DB (NoSQL)
-COSMOS_DB = {
+"""COSMOS_DB = {
     "ENDPOINT": "https://ibmec-cosmosdb-202307164641.documents.azure.com:443/",
     "PRIMARY_KEY": "5aaddd14-5b11-412f-8766-2cb00d4d6da0",
     "DATABASE_ID": "ibmec-cloud-products",
     "CONTAINER_ID": "produto"
-}
+}"""
 
 
 

@@ -1,8 +1,11 @@
 from rest_framework import serializers
-from produtos.models import Produto
+#from produtos.models import Produto
 
-class ProdutoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Produto
-        fields = '__all__'
-        
+class ProdutoSerializer(serializers.Serializer):
+    id = serializers.CharField(read_only=True)
+    nome = serializers.CharField()
+    descricao = serializers.CharField()
+    preco = serializers.FloatField()
+    categoria = serializers.CharField()
+    imagem_url = serializers.URLField()
+

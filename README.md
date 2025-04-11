@@ -1,6 +1,6 @@
 # bigdata_cloudcomputing
 
-# 🛒 E-commerce API - Django + MySQL + Azure Cosmos DB
+# 🛒 E-commerce API - Django + Azure MySQL + Azure Cosmos DB
 
 Esta é uma API REST para um sistema de e-commerce, desenvolvida com **Django REST Framework**, utilizando **MySQL** para gestão de usuários, endereços e cartões de crédito, e **Azure Cosmos DB** para gerenciamento de produtos.
 

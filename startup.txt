@@ -1,4 +1,2 @@
-gunicorn ecommerce_api.wsgi --chdir ecommerce_api --bind=0.0.0.0:$PORT
-
-
-
+set PORT=8000
+gunicorn ecommerce_api.wsgi --chdir ecommerce_api --bind=0.0.0.0:%PORT%

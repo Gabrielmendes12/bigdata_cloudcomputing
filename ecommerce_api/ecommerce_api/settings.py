@@ -41,7 +41,8 @@ SECRET_KEY = "django-insecure-uak9-#*zr^u8klhdt1-o1laswn8_4^j+b0b!h#^b1g8h($me9&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ibmec-ecommerce-202307164641-c8gygxgnfnfzgybj.centralus-01.azurewebsites.net']
+# Temporariamente permitindo todas as conexões para fins de teste
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

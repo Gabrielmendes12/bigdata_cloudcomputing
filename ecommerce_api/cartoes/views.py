@@ -1,41 +1,40 @@
-from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
+from rest_framework.decorators import action
 from cartoes.models import CartaoCredito
 from cartoes.serializers import CartaoCreditoSerializer
-from rest_framework.decorators import action
 
-# Create your views here.
+
 class CartaoCreditoViewSet(ModelViewSet):
     queryset = CartaoCredito.objects.all()
     serializer_class = CartaoCreditoSerializer
 
-    @action(detail=True, methods=['get'])
+    # GET /cartoes/<id>/get_saldo/
+    @action(detail=True, methods=['get'], url_path='get_saldo')
     def get_saldo(self, request, pk=None):
-
         try:
             cartao = CartaoCredito.objects.get(pk=pk)
             if cartao.saldo <= 0:
                 return Response({"mensagem": "Saldo insuficiente"})
-            return Response({"Saldo":cartao.saldo})
-
+            return Response({"Saldo": cartao.saldo})
         except:
             return Response({"erro": "Cartão não encontrado"}, status=404)
 
-    @action(detail=True, methods=['post'])
+    # POST /cartoes/<id>/autorizacao/
+    @action(detail=True, methods=['post'], url_path='autorizacao')
     def autorizacao(self, request, pk=None):
         try:
-            print("Recebendo requisição...")  # Para verificar se a função está sendo chamada
+            print("Recebendo requisição...")
             cartao = CartaoCredito.objects.get(pk=pk)
-            print(f"Cartão encontrado: {cartao.id_cartao}")  # Para confirmar se o cartão foi encontrado
+            print(f"Cartão encontrado: {cartao.id_cartao}")
 
             valor = request.data.get("valor")
-            print(f"Valor recebido: {valor}")  # Para verificar o que está chegando na requisição
+            print(f"Valor recebido: {valor}")
 
             if valor is None:
                 return Response({"erro": "Informe o valor da transação"}, status=400)
 
-
+            valor = float(valor)
             print(f"Saldo atual: {cartao.saldo}")
 
             if cartao.saldo is None or cartao.saldo < valor:

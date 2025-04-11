@@ -18,24 +18,54 @@ from django.contrib import admin
 from django.urls import path, include
 from usuarios.views import UsuarioViewSet 
 from cartoes.views import CartaoCreditoViewSet
-from enderecos.views import EnderecoViewSet, TipoEnderecoViewSet
-#from produtos.views import ProdutoViewSet
+from enderecos.views import EnderecoViewSet
 from rest_framework import routers
 
 # Criando um router para gerar automaticamente as rotas
 router = routers.DefaultRouter()
-router.register(r'usuarios', UsuarioViewSet)
-router.register(r'cartoes', CartaoCreditoViewSet)
+router.register(r'usuarios', UsuarioViewSet, basename='usuario')
+router.register(r'cartoes', CartaoCreditoViewSet, basename='cartao')
 router.register(r'enderecos', EnderecoViewSet)
-router.register(r'tipos-endereco', TipoEnderecoViewSet)
-#router.register(r'pedidos', PedidoViewSet)
-#router.register(r'produtos', ProdutoViewSet)
-#router.register(r'itens-pedido', ItemPedidoViewSet)
 
+# Usuários (singular)
+usuario_create = UsuarioViewSet.as_view({'post': 'create'})
+usuario_detail = UsuarioViewSet.as_view({
+    'get': 'retrieve',
+    'put': 'update',
+    'delete': 'destroy',
+})
+
+# Cartões (singular)
+cartao_create = CartaoCreditoViewSet.as_view({'post': 'create'})
+cartao_detail = CartaoCreditoViewSet.as_view({
+    'get': 'retrieve',
+    'put': 'update',
+    'delete': 'destroy',
+})
+
+# Endereços (singular)
+endereco_create = EnderecoViewSet.as_view({'post': 'create'})
+endereco_detail = EnderecoViewSet.as_view({
+    'get': 'retrieve',
+    'put': 'update',
+    'delete': 'destroy',
+})
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include(router.urls)),
     path("", include('produtos.urls')),
+    path('', include(router.urls)),
 
+    # Usuários
+    path('usuario/', usuario_create, name='usuario-create'),
+    path('usuario/<str:pk>/', usuario_detail, name='usuario-detail'),
+
+    # Cartões
+    path('cartao/', cartao_create, name='cartao-create'),
+    path('cartao/<str:pk>/', cartao_detail, name='cartao-detail'),
+
+    # Endereços
+    path('endereco/', endereco_create, name='endereco-create'),
+    path('endereco/<str:pk>/', endereco_detail, name='endereco-detail'),
 ]
+

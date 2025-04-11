@@ -40,23 +40,3 @@ def deletar_produto(request, id, categoria):
         return Response({"error": "Campo 'categoria' é obrigatório para deletar o item."}, status=400)
     cosmos_instance.delete_item(id, categoria)
     return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-
-
-
-
-
-
-
-
-
-# from django.shortcuts import render
-# from rest_framework.viewsets import ModelViewSet
-# from produtos.models import Produto
-# from produtos.serializers import ProdutoSerializer
-
-
-# class ProdutoViewSet(ModelViewSet):
-#     queryset = Produto.objects.all()
-#     serializer_class = ProdutoSerializer

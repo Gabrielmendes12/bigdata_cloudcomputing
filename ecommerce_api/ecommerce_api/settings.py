@@ -112,19 +112,6 @@ DATABASES = {
 }
 
 
-#DATABASE_ROUTERS = ['produtos.routers.ProdutoRouter']
-
-# Configuração do Azure Cosmos DB (NoSQL)
-"""COSMOS_DB = {
-    "ENDPOINT": "https://ibmec-cosmosdb-202307164641.documents.azure.com:443/",
-    "PRIMARY_KEY": "5aaddd14-5b11-412f-8766-2cb00d4d6da0",
-    "DATABASE_ID": "ibmec-cloud-products",
-    "CONTAINER_ID": "produto"
-}"""
-
-
-
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 

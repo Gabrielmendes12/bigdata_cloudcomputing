@@ -29,25 +29,3 @@ class CosmosDB:
 
 # Instância global reutilizável
 cosmos_instance = CosmosDB()
-
-
-
-
-
-
-
-"""
-from pymongo import MongoClient
-from django.conf import settings
-
-class CosmosDB:
-    def __init__(self):
-        self.client = MongoClient(settings.COSMOSDB_URI, username='', password=settings.COSMOSDB_PRIMARY_KEY)
-        self.db = self.client[settings.COSMOSDB_DATABASE_NAME]
-
-    def get_collection(self, collection_name):
-        return self.db[collection_name]
-
-# Criando uma instância global da conexão
-cosmos_db_instance = CosmosDB()
-"""

@@ -1,5 +1,4 @@
 from rest_framework import serializers
-#from produtos.models import Produto
 
 class ProdutoSerializer(serializers.Serializer):
     id = serializers.CharField(read_only=True)

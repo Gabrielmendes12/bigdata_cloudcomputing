@@ -9,7 +9,7 @@ class CartaoCredito(models.Model):
     saldo = models.FloatField(null=True, db_column="saldo")
     usuario = models.ForeignKey(
         "usuarios.Usuario", null=True, on_delete=models.CASCADE, db_column="id_usuario_cartao"
-    ) # estava SET_NULL, mas o correto é CASCADE, pois se o usuário for excluído, os cartões também devem ser excluídos?
+    ) # estava SET_NULL, mas o correto é CASCADE, pois se o usuário for excluído, os cartões também devem ser excluídos
 
     class Meta:
         db_table = "cartao_credito"

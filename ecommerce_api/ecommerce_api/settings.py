@@ -104,7 +104,9 @@ DATABASES = {
         'HOST': 'ibmec-ecommerce-bigdata-2.mysql.database.azure.com',  # Host do MySQL no Azure
         'PORT': '3306',  # Porta padrão do MySQL
         'OPTIONS': {
-            'ssl': {'ca': '/caminho/para/BaltimoreCyberTrustRoot.crt.pem'}  # Certificado SSL se necessário
+            'ssl': {
+                'ca': r'C:\Users\gabri\Downloads\BaltimoreCyberTrustRoot.crt.pem',  # Caminho para o certificado SSL
+            }
         }
     }
 }

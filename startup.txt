@@ -1,2 +1,0 @@
-gunicorn ecommerce_api.ecommerce_api.wsgi:application --chdir ecommerce_api --bind=0.0.0.0:$PORT
-

@@ -15,6 +15,16 @@ def listar_produtos(request):
     serializer = ProdutoSerializer(produtos, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def buscar_produto_por_nome(request):
+    nome = request.GET.get("productName", "").lower()
+    items = cosmos_instance.list_items()
+    produtos = [Produto.from_dict(item) for item in items if nome in item.get("nome", "").lower()]
+    serializer = ProdutoSerializer(produtos, many=True)
+    return Response(serializer.data)
+
+# Nova view adicionada pro bot -> Isso faz um filtro básico por nome (insensível a maiúsculas/minúsculas) entre os produtos retornados do Cosmos DB.
+
 @api_view(['POST'])
 def criar_produto(request):
     serializer = ProdutoSerializer(data=request.data)

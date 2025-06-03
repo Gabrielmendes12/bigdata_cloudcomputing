@@ -10,5 +10,5 @@ class DefaultConfig:
     PORT = 3978
     APP_ID = os.environ.get("MicrosoftAppId", "")
     APP_PASSWORD = os.environ.get("MicrosoftAppPassword", "")
-    URL_PREFIX = os.environ.get("URL_PREFIX","http://localhost:8080")
+    URL_PREFIX = os.environ.get("URL_PREFIX","http://127.0.0.1:8000") # meu backend django roda na porta 8000
     

@@ -82,20 +82,24 @@ class ConsultarProdutosDialog (ComponentDialog):
 
         response = produto_api.search_product(productName)
 
+        # nova lógica de conexão para verificar se a resposta é válida
+        if not response:
+            await step_context.context.send_activity("Nenhum produto foi encontrado ou houve erro na conexão com o sistema.")
+            return 
+        
         for produto in response:
-            #Montando o card
+            #Montando o card de acordo com o meu modelo de produto
             card = CardFactory.hero_card(
                 HeroCard(
-                    title=produto["productName"],
-                    text=f"Preço: R$ {produto['price']}",
-                    subtitle=produto["productDescription"],
-                    images=[CardImage(url=imagem) for imagem in produto["imageUrl"]],
+                    title=produto["nome"],
+                    text=f"Preço: R$ {produto['preco']}",
+                    subtitle=produto["descricao"],
+                    images=[CardImage(url=imagem) for imagem in produto["imagem_url"]],
                     buttons=[
                         CardAction(
                             type=ActionTypes.post_back,
-                            title=f"Comprar {produto["productName"]}",
+                            title=f"Comprar {produto['nome']}",
                             value={"acao": "comprar", "productId": produto["id"]},
-
                         )
                     ],
                 )

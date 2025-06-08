@@ -54,6 +54,7 @@ endereco_detail = EnderecoViewSet.as_view({
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include('produtos.urls')),
+    path("", include('pedidos.urls')),
     path('', include(router.urls)),
 
     # Usuários

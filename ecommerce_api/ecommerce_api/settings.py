@@ -20,7 +20,8 @@ from decouple import config
 COSMOSDB_URI = config("COSMOSDB_URI")
 COSMOSDB_KEY = config("COSMOSDB_KEY")
 COSMOSDB_DATABASE_ID = config("COSMOSDB_DATABASE_ID")
-COSMOSDB_CONTAINER_ID = config("COSMOSDB_CONTAINER_ID")
+COSMOSDB_CONTAINER_PEDIDOS = config("COSMOSDB_CONTAINER_PEDIDOS")
+COSMOSDB_CONTAINER_PRODUTOS = config("COSMOSDB_CONTAINER_PRODUTOS")
 
 
 
@@ -59,6 +60,7 @@ INSTALLED_APPS = [
     'cartoes', # aplicação para entidade cartão de crédito
     'enderecos', # aplicação para entidade endereço e tipo de endereço
     'produtos', # aplicação para entidade produto
+    'pedidos', # aplicação para entidade pedido
 ]
 
 MIDDLEWARE = [

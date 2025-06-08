@@ -94,7 +94,7 @@ class ConsultarProdutosDialog (ComponentDialog):
                     title=produto["nome"],
                     text=f"Preço: R$ {produto['preco']}",
                     subtitle=produto["descricao"],
-                    images=[CardImage(url=imagem) for imagem in produto["imagem_url"]],
+                    images=[CardImage(url=produto["imagem_url"])],
                     buttons=[
                         CardAction(
                             type=ActionTypes.post_back,

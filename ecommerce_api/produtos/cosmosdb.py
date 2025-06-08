@@ -3,11 +3,11 @@
 from azure.cosmos import CosmosClient
 from django.conf import settings
 
-class CosmosDB:
+class CosmosDBProdutos:
     def __init__(self):
         self.client = CosmosClient(settings.COSMOSDB_URI, credential=settings.COSMOSDB_KEY)
         self.database = self.client.get_database_client(settings.COSMOSDB_DATABASE_ID)
-        self.container = self.database.get_container_client(settings.COSMOSDB_CONTAINER_ID)
+        self.container = self.database.get_container_client(settings.COSMOSDB_CONTAINER_PRODUTOS)
 
     def list_items(self):
         return list(self.container.read_all_items())
@@ -28,4 +28,4 @@ class CosmosDB:
         return self.container.read_item(item=item_id, partition_key=partition_key_value)
 
 # Instância global reutilizável
-cosmos_instance = CosmosDB()
+cosmos_produtos = CosmosDBProdutos()

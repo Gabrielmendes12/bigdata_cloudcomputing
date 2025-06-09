@@ -23,9 +23,17 @@ class CosmosDBProdutos:
         # Isso é necessário para o Cosmos DB, pois ele usa chaves de partição para distribuir dados.
         # O item_id é o ID do item que você deseja excluir.
         return self.container.delete_item(item=item_id, partition_key=partition_key_value)
-
+    """
     def get_item(self, item_id, partition_key_value):
-        return self.container.read_item(item=item_id, partition_key=partition_key_value)
-
+        return self.container.read_item(item=item_id, partition_key=partition_key_value)"""
+    def get_item(self, item_id, partition_key_value=None):
+        if partition_key_value:
+            return self.container.read_item(item=item_id, partition_key=partition_key_value)
+        else:
+            query = f"SELECT * FROM c WHERE c.id = '{item_id}'"
+            items = list(self.container.query_items(query=query, enable_cross_partition_query=True))
+            if not items:
+                raise Exception("Produto não encontrado.")
+            return items[0]
 # Instância global reutilizável
 cosmos_produtos = CosmosDBProdutos()

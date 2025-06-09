@@ -62,20 +62,13 @@ class ConsultarProdutosDialog (ComponentDialog):
 
     async def buy_product_step(self, step_context: WaterfallStepContext):
 
-        result_action = step_context.context.activity.value
+        product_id = step_context.result  # Agora ele vem como texto direto
 
-        if (result_action is None):
+        if not product_id:
             return await step_context.end_dialog()
-        
-        if result_action["acao"] == "comprar":
 
-            product_id = result_action["productId"]
+        return await step_context.begin_dialog("ComprarProdutoDialog", {"productId": product_id})
 
-            return await step_context.begin_dialog("ComprarProdutoDialog", {"productId": product_id})
-
-            #Direcionar para outro dialog de compras
-        
-        return await step_context.end_dialog()
 
     async def show_card_results(self, productName, step_context: WaterfallStepContext):
         produto_api = ProductAPI()
@@ -97,9 +90,9 @@ class ConsultarProdutosDialog (ComponentDialog):
                     images=[CardImage(url=produto["imagem_url"])],
                     buttons=[
                         CardAction(
-                            type=ActionTypes.post_back,
+                            type=ActionTypes.im_back,
                             title=f"Comprar {produto['nome']}",
-                            value={"acao": "comprar", "productId": produto["id"]},
+                            value=produto["id"],  # apenas o ID diretamente
                         )
                     ],
                 )

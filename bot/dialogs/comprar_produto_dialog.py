@@ -56,7 +56,7 @@ class ComprarProdutoDialog(ComponentDialog):
         }
 
         try:
-            response = requests.post("http://127.0.0.1:8000/pedidos/", json=pedido_data)
+            response = requests.post("http://127.0.0.1:8000/pedido/", json=pedido_data)
             if response.status_code == 201:
                 pedido = response.json()
                 await step_context.context.send_activity(

@@ -7,7 +7,7 @@ class Pedido:
         self.produto_id = produto_id
         self.valor = valor
         self.id_pedidousuario = id_pedidousuario
-        self.numero_cartao = numero_cartao[-4:]  # só os 4 últimos dígitos
+        self.numero_cartao = numero_cartao
         self.data_pedido = data_pedido or timezone.now().isoformat()
 
     def to_dict(self):

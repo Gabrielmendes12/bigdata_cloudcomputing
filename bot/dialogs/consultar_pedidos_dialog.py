@@ -27,17 +27,35 @@ class ConsultarPedidosDialog(ComponentDialog):
         numero_cartao = step_context.result
 
         try:
-            response = requests.get(f"http://127.0.0.1:8000/pedidos/cartao/{numero_cartao}/")
+            # 1. Buscar todos os cartões
+            response = requests.get("http://127.0.0.1:8000/cartoes/")
+            if response.status_code != 200:
+                raise Exception("Erro ao consultar os cartões.")
 
-            if response.status_code == 200:
-                pedidos = response.json()
+            cartoes = response.json()
+            cartao_encontrado = next((c for c in cartoes if c["numero"] == numero_cartao), None)
 
+            if not cartao_encontrado:
+                await step_context.context.send_activity("Cartão não encontrado.")
+                return await step_context.end_dialog()
+
+            id_usuario = str(cartao_encontrado["usuario"])
+
+            # 2. Consultar pedidos com base no ID do usuário
+            pedidos_response = requests.get(f"http://127.0.0.1:8000/pedidos/usuario/{id_usuario}/")
+
+            if pedidos_response.status_code == 200:
+                pedidos = pedidos_response.json()
                 if not pedidos:
                     await step_context.context.send_activity("Nenhum pedido encontrado para esse cartão.")
                 else:
                     mensagem = "Pedidos encontrados:\n"
                     for pedido in pedidos:
-                        mensagem += f"- Produto `{pedido['produto_id']}`, valor: R${pedido['valor']}, data: {pedido['data_pedido']}\n"
+                        mensagem += (
+                            f"\nProduto: `{pedido['produto_id']}`"
+                            f"\nValor: R${pedido['valor']}"
+                            f"\nData: {pedido['data_pedido'][:10]}\n"
+                        ) 
                     await step_context.context.send_activity(mensagem)
             else:
                 await step_context.context.send_activity(f"Erro ao consultar pedidos: {response.status_code}")
